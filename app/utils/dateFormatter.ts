@@ -35,13 +35,15 @@ export const getDuration = (start: string, end: string) => {
     return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
 };
 
-export const getTimeUntilStart = (start: string) => {
+export const getTimeUntilStart = (start: string, end: string) => {
     const startDate = new Date(start);
+    const endDate = new Date(end);
     const now = new Date();
 
-    const diffMinutes = Math.floor((startDate.getTime() - now.getTime()) / (1000 * 60));
-    if (diffMinutes < 0) return "Started"; // If contest already started
+    if (now >= endDate) return "Completed"; // Contest has ended
+    if (now >= startDate) return "Started"; // Contest is ongoing
 
+    const diffMinutes = Math.floor((startDate.getTime() - now.getTime()) / (1000 * 60));
     const days = Math.floor(diffMinutes / (60 * 24));
     const hours = Math.floor((diffMinutes % (60 * 24)) / 60);
     const minutes = diffMinutes % 60;
@@ -52,6 +54,7 @@ export const getTimeUntilStart = (start: string) => {
         ? `Starts in ${hours}h ${minutes}m`
         : `Starts in ${minutes}m`;
 };
+
 
 export const getDate = (start: string) => {
     const startDate = new Date(start);

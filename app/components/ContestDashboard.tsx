@@ -6,6 +6,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { Contest } from "./ContestCard";
 import PlatformFilter from "./PlatformFilter";
 import PastContest from "./PastContest";
+import { Spinner } from "@/components/spinner";
+import {LayoutGrid, TableProperties } from "lucide-react";
 // import ContestCard from "./ContestCard";
 
 const ContestDashboard = () => {
@@ -20,6 +22,7 @@ const ContestDashboard = () => {
     const [loadingMore, setLoadingMore] = useState(false);
     const [offset, setOffset] = useState(10);
     const [hasMore, setHasMore] = useState(true);
+    const [viewMode, setViewMode] = useState("card");
     const limit = 10;
 
     useEffect(() => {
@@ -79,8 +82,8 @@ const ContestDashboard = () => {
             setOffset(offset + limit);
 
             setTimeout(() => {
-                loadRef.current?.scrollIntoView({behavior:"smooth", block: "start"})
-            },100)
+                loadRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+            }, 100)
 
         } catch (error) {
             console.error("Error loading more past contests: ", error);
@@ -90,7 +93,11 @@ const ContestDashboard = () => {
 
 
     if (loading) {
-        return <div>Loading...</div>; // Show loading message or spinner
+        return (
+            <div className="h-svh flex justify-center items-center">
+                <Spinner size={"icon"} />
+            </div>
+        )
     }
     return (
         <div className="">
@@ -101,7 +108,7 @@ const ContestDashboard = () => {
                     selectedPlatform={selectedPlatform}
                     onPlatformChange={handlePlatformChange}
                 />
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-3">
                     {fContests.map((contest) => {
                         return (
                             <div key={contest.id}>
@@ -112,14 +119,34 @@ const ContestDashboard = () => {
                 </div>
             </div>
             <div className="flex flex-col items-center">
-                <h2 className="text-4xl py-2 font-bold">Past Coding Contests</h2>
-                <PlatformFilter
-                    selectedPlatform={selectedPlatformPast}
-                    onPlatformChange={handlePlatformChangePast}
-                />
-                <PastContest
-                    contests={pastContests}
-                />
+                <h2 className="text-4xl py-2 font-bold mt-5">Past Coding Contests</h2>
+                <div className="flex gap-64">
+                    <PlatformFilter
+                        selectedPlatform={selectedPlatformPast}
+                        onPlatformChange={handlePlatformChangePast}
+                    />
+                    <div className="flex gap-2 my-4">
+                        <button className={`p-2 border rounded-lg ${viewMode === "card" ? "bg-blue-500 text-white" : "bg-gray-200"}`} onClick={() => setViewMode("card")}>
+                            <LayoutGrid/>
+                        </button>
+                        <button className={`p-2 border rounded-lg ${viewMode === "table" ? "bg-blue-500 text-white" : "bg-gray-200"}`} onClick={() => setViewMode("table")}>
+                            <TableProperties/>
+                        </button>
+                    </div>
+                </div>
+                {viewMode === "table" ? (
+                    <PastContest contests={pastContests} />
+                ) : (
+                    <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-3">
+                        {pastContests.map((contest) => {
+                            return (
+                                <div key={contest.id}>
+                                    <ContestCard contest={contest} />
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
             </div>
             <div ref={loadRef} className="flex justify-center mb-6">
                 {hasMore && (

@@ -2,7 +2,7 @@ import React from "react";
 import { Contest } from "./ContestCard";
 import { getDate, getDuration } from "../utils/dateFormatter";
 import Link from "next/link";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Youtube } from "lucide-react";
 
 const PastContest = ({ contests }: { contests: Contest[] }) => {
     return (
@@ -42,7 +42,19 @@ const PastContest = ({ contests }: { contests: Contest[] }) => {
                                     </td>
                                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-md font-medium md:pr-6">
 
-                                        <Link href={contest.url} target="_blank" className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 flex items-center gap-1"><ExternalLink className="size-5"/>Contest Link</Link>
+                                        <Link href={contest.url} target="_blank" className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 flex items-center gap-1"><ExternalLink className="size-5" />Contest Link</Link>
+                                    </td>
+                                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-md font-medium md:pr-6">
+
+                                        {!contest.solutionLink ? (
+                                            <div className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium focus:outline-none cursor-pointer flex gap-1.5 items-center border p-1 border-blue-400 rounded-lg">
+                                                <Youtube size={20} />
+                                                Coming soon...
+                                            </div>
+                                        ) : <Link href={contest.solutionLink} target="_blank" className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium focus:outline-none cursor-pointer flex gap-1.5 items-center border p-1 border-blue-400 rounded-lg">
+                                            <Youtube size={20} />
+                                            Video Solution
+                                        </Link>}
                                     </td>
                                 </tr>
                             </tbody>
