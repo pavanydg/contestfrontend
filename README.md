@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Contest Tracker Backend & Frontend
 
-## Getting Started
+This project aggregates contest information from various coding platforms such as Codeforces, CodeChef, and LeetCode, and provides a frontend to display and interact with the data.
 
-First, run the development server:
+## Features (Frontend)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Display** upcoming and past contests from platforms like Leetcode, Codeforces, and CodeChef.
+2. **Filter** contests based on platforms.
+3. **Bookmark** a contest.
+4. **Video Solution Link** if available from the TLE YouTube channel.
+5. **Responsive UI** for mobile and tablet, with both light and dark mode.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Backend Repository
+- **Repo:** [Contest Tracker Backend](https://github.com/pavanydg/contest_backend)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Stack Used
+- **Frontend:** Next.js, TailwindCSS, Framer Motion
+- **Backend:** Express.js
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## APIs Used
 
-## Learn More
+### Codeforces
+- **Endpoint:** [`https://codeforces.com/api/contest.list`](https://codeforces.com/api/contest.list)
+- **Description:** Provides a list of contests hosted on Codeforces.
 
-To learn more about Next.js, take a look at the following resources:
+### CodeChef
+- **Endpoint:** [`https://www.codechef.com/api/list/contests/all?sort_by=START&sorting_order=asc&offset=0&mode=all`](https://www.codechef.com/api/list/contests/all?sort_by=START&sorting_order=asc&offset=0&mode=all)
+- **Description:** Fetches all upcoming contests on CodeChef, sorted by start time in ascending order.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Leetcode
+- **Endpoint:** [`https://leetcode.com/graphql`](https://leetcode.com/graphql)
+- **Description:** Uses GraphQL to retrieve contest details from LeetCode.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### YouTube API (for fetching videos)
+- **Endpoint:** [`https://www.googleapis.com/youtube/v3/playlistItems`](https://www.googleapis.com/youtube/v3/playlistItems)
+- **Description:** Fetches videos related to contests from YouTube playlists.
 
-## Deploy on Vercel
+## Usage
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Backend Setup
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/your-username/contest-tracker-backend.git
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. **Navigate to the project directory:**
+   ```sh
+   cd contest-tracker-backend
+   ```
+
+3. **Install dependencies:**
+   ```sh
+   npm install
+   ```
+
+4. **Set up environment variables for API keys if necessary.**
+
+5. **Run the application:**
+   ```sh
+   node server.js
+   ```
+
+### Frontend Setup
+1. **Clone the frontend repository:**
+   ```sh
+   git clone https://github.com/your-username/contest-tracker-frontend.git
+   ```
+
+2. **Navigate to the project directory:**
+   ```sh
+   cd contest-tracker-frontend
+   ```
+
+3. **Install dependencies:**
+   ```sh
+   npm install
+   ```
+
+4. **Run the development server:**
+   ```sh
+   npm run dev
+   ```
+
+5. **Open in browser:**
+   Visit `http://localhost:3000` to see the frontend in action.
+
+## Demo Video
+https://drive.google.com/file/d/13Ipbp1Vw2Vrcs7KV_quQsN72yFSGjEEw/view?usp=drive_link
+
+## Contributing
+Contributions are welcome! Please follow the [contribution guidelines](CONTRIBUTING.md) before submitting pull requests.
+
+## License
+This project is licensed under the [MIT License](LICENSE).

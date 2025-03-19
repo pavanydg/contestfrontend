@@ -5,9 +5,6 @@ import BookmarkButton from "./BookMarkButton";
 import { cn } from "@/lib/utils";
 import { contestStatus, platformStyles } from "../utils/styles";
 
-// {Platform, startTime, Title, duration, link}
-
-
 export type Contest = {
     id: string;
     name: string;

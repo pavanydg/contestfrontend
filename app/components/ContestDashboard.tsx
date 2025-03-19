@@ -17,7 +17,7 @@ const ContestDashboard = () => {
         upcoming: [],
         past: []
     });
-    const [loading, setLoading] = useState(true); // State for loading indicator
+    const [loading, setLoading] = useState(true);
     const [selectedPlatform, setSelectedPlatform] = useState<string[]>(["All Contests"]);
     const [selectedPlatformPast, setSelectedPlatformPast] = useState<string[]>(["All Contests"]);
     const [loadingMore, setLoadingMore] = useState(false);
@@ -29,7 +29,7 @@ const ContestDashboard = () => {
     useEffect(() => {
         const fetchContests = async () => {
             try {
-                setLoading(true); // Start loading
+                setLoading(true); 
 
                 const upcomingContestsResponse = await axios.get(`http://localhost:3001/api/contests/filter?status=upcoming`);
                 const upcomingContests = upcomingContestsResponse.data.data;
@@ -45,7 +45,7 @@ const ContestDashboard = () => {
             } catch (error) {
                 console.error("Error fetching contests: ", error);
             } finally {
-                setLoading(false); // Stop loading
+                setLoading(false); 
             }
         };
 
@@ -55,11 +55,11 @@ const ContestDashboard = () => {
     const handlePlatformChange = (platform: string) => {
         setSelectedPlatform((prev) => {
             if (platform === "All Contests") {
-                return ["All Contests"]; // Reset to show all contests
+                return ["All Contests"]; 
             }
             const updatedSelection = prev.includes(platform)
-                ? prev.filter(p => p !== platform) // Remove if already selected
-                : [...prev.filter(p => p !== "All Contests"), platform]; // Add new platform, remove "All Contests"
+                ? prev.filter(p => p !== platform)
+                : [...prev.filter(p => p !== "All Contests"), platform]; 
     
             return updatedSelection.length === 0 ? ["All Contests"] : updatedSelection;
         });
@@ -68,11 +68,11 @@ const ContestDashboard = () => {
     const handlePlatformChangePast = (platform: string) => {
         setSelectedPlatformPast((prev) => {
             if (platform === "All Contests") {
-                return ["All Contests"]; // Reset to show all contests
+                return ["All Contests"]; 
             }
             const updatedSelection = prev.includes(platform)
-                ? prev.filter(p => p !== platform) // Remove if already selected
-                : [...prev.filter(p => p !== "All Contests"), platform]; // Add new platform, remove "All Contests"
+                ? prev.filter(p => p !== platform)
+                : [...prev.filter(p => p !== "All Contests"), platform];
     
             return updatedSelection.length === 0 ? ["All Contests"] : updatedSelection;
         });
@@ -176,12 +176,12 @@ const ContestDashboard = () => {
                         {!loadingMore && (
                             <motion.div
                             animate={{
-                                y: [0, 5, 0], // Moves up and down
+                                y: [0, 5, 0],
                             }}
                             transition={{
-                                duration: 1, // Speed of animation
-                                repeat: Infinity, // Infinite loop
-                                ease: "easeInOut", // Smooth transition
+                                duration: 1, 
+                                repeat: Infinity,
+                                ease: "easeInOut",
                             }}
                         >
                             <ChevronDown />

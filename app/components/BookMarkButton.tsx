@@ -18,7 +18,6 @@ const BookmarkButton = ({ contest, className = "" }: BookmarkButtonProps) => {
   }, [contest.id]);
 
   const toggleBookmark = (e: React.MouseEvent) => {
-    // Prevent event from bubbling up if the card is clickable
     e.stopPropagation();
     
     // Get current bookmarks from localStorage
@@ -36,10 +35,8 @@ const BookmarkButton = ({ contest, className = "" }: BookmarkButtonProps) => {
       toast("Bookmark added")
     }
     
-    // Update state
     setIsBookmarked(!isBookmarked);
     
-    // Dispatch custom event to notify that bookmarks have changed
     window.dispatchEvent(new Event('bookmarkUpdated'));
   };
 
