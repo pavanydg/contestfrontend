@@ -1,7 +1,7 @@
 import React from "react";
 
 type PlatformFilterProps = {
-    selectedPlatform: string;
+    selectedPlatform: string[];
     onPlatformChange: (platform: string) => void;
 };
 
@@ -15,7 +15,7 @@ const PlatformFilter: React.FC<PlatformFilterProps> = ({ selectedPlatform, onPla
                     key={platform}
                     onClick={() => onPlatformChange(platform)}
                     className={`px-4 py-2 rounded-lg border ${
-                        selectedPlatform === platform ? "bg-blue-500 text-white" : "bg-gray-200 text-black"
+                        selectedPlatform.includes(platform) ? "bg-blue-500 text-white" : "bg-gray-200 text-black"
                     }`}
                 >
                     {platform}

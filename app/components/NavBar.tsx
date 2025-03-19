@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { ModeToggle } from "./ModeToggle";
 
 export const NavBar = () => {
     return <nav className="top-0 left-0 right-0 z-50 backdrop-blur-sm">
@@ -8,6 +9,8 @@ export const NavBar = () => {
             <div className="flex items-center gap-8">
                 <a href="#features" className="hover:text-yellow-400 transition-colors">Features</a>
                 <Link href="/contests" className="hover:text-yellow-400 transition-colors">Contests</Link>
+                <Link href="/bookmarks" className="hover:text-yellow-400 transition-colors">BookMarks</Link>
+                <ModeToggle/>
             </div>
         </div>
     </nav>

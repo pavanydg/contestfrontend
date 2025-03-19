@@ -7,8 +7,9 @@ import { Contest } from "./ContestCard";
 import PlatformFilter from "./PlatformFilter";
 import PastContest from "./PastContest";
 import { Spinner } from "@/components/spinner";
-import {LayoutGrid, TableProperties } from "lucide-react";
-// import ContestCard from "./ContestCard";
+import { ChevronDown, LayoutGrid, TableProperties } from "lucide-react";
+import { motion } from "framer-motion";
+
 
 const ContestDashboard = () => {
     const loadRef = useRef<HTMLDivElement | null>(null);
@@ -17,8 +18,8 @@ const ContestDashboard = () => {
         past: []
     });
     const [loading, setLoading] = useState(true); // State for loading indicator
-    const [selectedPlatform, setSelectedPlatform] = useState<string>("All Contests");
-    const [selectedPlatformPast, setSelectedPlatformPast] = useState<string>("All Contests");
+    const [selectedPlatform, setSelectedPlatform] = useState<string[]>(["All Contests"]);
+    const [selectedPlatformPast, setSelectedPlatformPast] = useState<string[]>(["All Contests"]);
     const [loadingMore, setLoadingMore] = useState(false);
     const [offset, setOffset] = useState(10);
     const [hasMore, setHasMore] = useState(true);
@@ -52,18 +53,36 @@ const ContestDashboard = () => {
     }, []);
 
     const handlePlatformChange = (platform: string) => {
-        setSelectedPlatform(platform);
+        setSelectedPlatform((prev) => {
+            if (platform === "All Contests") {
+                return ["All Contests"]; // Reset to show all contests
+            }
+            const updatedSelection = prev.includes(platform)
+                ? prev.filter(p => p !== platform) // Remove if already selected
+                : [...prev.filter(p => p !== "All Contests"), platform]; // Add new platform, remove "All Contests"
+    
+            return updatedSelection.length === 0 ? ["All Contests"] : updatedSelection;
+        });
     };
 
     const handlePlatformChangePast = (platform: string) => {
-        setSelectedPlatformPast(platform);
+        setSelectedPlatformPast((prev) => {
+            if (platform === "All Contests") {
+                return ["All Contests"]; // Reset to show all contests
+            }
+            const updatedSelection = prev.includes(platform)
+                ? prev.filter(p => p !== platform) // Remove if already selected
+                : [...prev.filter(p => p !== "All Contests"), platform]; // Add new platform, remove "All Contests"
+    
+            return updatedSelection.length === 0 ? ["All Contests"] : updatedSelection;
+        });
     };
 
-    const fContests = selectedPlatform === "All Contests"
+    const fContests = selectedPlatform.includes("All Contests")
         ? contests.upcoming
         : contests.upcoming.filter((contest) => selectedPlatform.includes(contest.platform))
 
-    const pastContests = selectedPlatformPast === "All Contests"
+    const pastContests = selectedPlatformPast.includes("All Contests")
         ? contests.past
         : contests.past.filter((contest) => selectedPlatformPast.includes(contest.platform))
 
@@ -100,7 +119,7 @@ const ContestDashboard = () => {
         )
     }
     return (
-        <div className="">
+        <div className="font-sans">
             <div className="flex flex-col items-center">
                 <div className="text-4xl py-2 font-bold">Upcoming Coding Contests</div>
 
@@ -126,11 +145,11 @@ const ContestDashboard = () => {
                         onPlatformChange={handlePlatformChangePast}
                     />
                     <div className="flex gap-2 my-4">
-                        <button className={`p-2 border rounded-lg ${viewMode === "card" ? "bg-blue-500 text-white" : "bg-gray-200"}`} onClick={() => setViewMode("card")}>
-                            <LayoutGrid/>
+                        <button className={`p-2 border rounded-lg ${viewMode === "card" ? "bg-blue-500 text-white" : "bg-gray-200 text-black"}`} onClick={() => setViewMode("card")}>
+                            <LayoutGrid />
                         </button>
-                        <button className={`p-2 border rounded-lg ${viewMode === "table" ? "bg-blue-500 text-white" : "bg-gray-200"}`} onClick={() => setViewMode("table")}>
-                            <TableProperties/>
+                        <button className={`p-2 border rounded-lg ${viewMode === "table" ? "bg-blue-500 text-white" : "bg-gray-200 text-black"}`} onClick={() => setViewMode("table")}>
+                            <TableProperties />
                         </button>
                     </div>
                 </div>
@@ -148,11 +167,27 @@ const ContestDashboard = () => {
                     </div>
                 )}
             </div>
-            <div ref={loadRef} className="flex justify-center mb-6">
+            <div ref={loadRef} className="flex justify-center my-6">
                 {hasMore && (
-                    <button className="border" onClick={loadMorePastContests} disabled={loadingMore}>
-                        {loadingMore ? "Loading..." : "Load More"}
-                    </button>
+                    <div className="flex items-center gap-2">
+                        <button className="cursor-pointer" onClick={loadMorePastContests} disabled={loadingMore}>
+                            {loadingMore ? "Loading..." : "Load More"}
+                        </button>
+                        {!loadingMore && (
+                            <motion.div
+                            animate={{
+                                y: [0, 5, 0], // Moves up and down
+                            }}
+                            transition={{
+                                duration: 1, // Speed of animation
+                                repeat: Infinity, // Infinite loop
+                                ease: "easeInOut", // Smooth transition
+                            }}
+                        >
+                            <ChevronDown />
+                        </motion.div>
+                        )}
+                    </div>
                 )}
             </div>
         </div>

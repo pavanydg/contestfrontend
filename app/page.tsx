@@ -5,11 +5,10 @@ import { Features } from './components/Features';
 
 function App() {
     return (
-        <div className="min-h-screen bg-black text-white">
+        <div className="min-h-screen bg-black text-white font-sans">
             <NavBar />
             <Hero />
             <Features />
-
         </div>
     );
 }
