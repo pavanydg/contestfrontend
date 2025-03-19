@@ -85,7 +85,9 @@ This project aggregates contest information from various coding platforms such a
    Visit `http://localhost:3000` to see the frontend in action.
 
 ## Demo Video
-https://drive.google.com/file/d/13Ipbp1Vw2Vrcs7KV_quQsN72yFSGjEEw/view?usp=drive_link
+
+https://github.com/user-attachments/assets/44a2b806-778d-4121-b371-d6809844fa90
+
 
 ## Contributing
 Contributions are welcome! Please follow the [contribution guidelines](CONTRIBUTING.md) before submitting pull requests.
